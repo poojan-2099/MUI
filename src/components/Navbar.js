@@ -1,6 +1,6 @@
 import { Anchor, Mail, Notifications} from '@mui/icons-material';
-import { AppBar, Avatar, Badge, Box, InputBase, styled, Toolbar, Typography } from '@mui/material'
-import React from 'react';
+import { AppBar, Avatar, Badge, Box, InputBase, Menu, MenuItem, styled, Toolbar, Typography } from '@mui/material'
+import React, { useState } from 'react';
 
 const StyledToolbar=styled(Toolbar)({
   display:"flex",
@@ -33,12 +33,13 @@ const UserBox=styled(Box)(({theme})=>({
 }));
 
 export const Navbar = () => {
+  const [open,setOpen]=useState(false)
   return (
     <AppBar position='sticky'>
       <StyledToolbar>
         <Typography variant='h6' sx={{display:{xs:"none",sm:"block"}}}>Poojan</Typography> 
         <Anchor sx={{display:{xs:"block",sm:"none"}}}/>
-        <Search><InputBase placeholder='Search....'/></Search>
+        <Search><InputBase sx={{color:"black"}} placeholder='Search....'/></Search>
         <Icons>
           <Badge badgeContent={4} color="error">
               <Mail/>
@@ -46,13 +47,31 @@ export const Navbar = () => {
           <Badge badgeContent={4} color="error">
               <Notifications />
           </Badge>
-          <Avatar sx={{width:30, height:30}} />
+          <Avatar sx={{width:30, height:30}} onClick={(e)=> setOpen(true)}/>
         </Icons>
-        <UserBox>
-          <Avatar sx={{width:30, height:30}}/>
+        <UserBox onClick={(e)=> setOpen(true)}>
+          <Avatar sx={{width:30, height:30}} />
           <Typography>Poojan Patel</Typography>
         </UserBox>
       </StyledToolbar>
+      <Menu
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        open={open}
+        onClose={(e)=> setOpen(true)}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+      >
+        <MenuItem >Profile</MenuItem>
+        <MenuItem >My account</MenuItem>
+        <MenuItem >Logout</MenuItem>
+      </Menu>
     </AppBar>
   )
 }
